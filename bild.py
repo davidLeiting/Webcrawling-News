@@ -47,11 +47,38 @@ content = resp.json()
 
 data = ["BILD", numberOfArticles, numberOfCoronaArticles, numberOfCoronaArticles/numberOfArticles, date.today(), content['weekIncidence'], content['r']['value'], content['casesPer100k'], content['casesPerWeek']]
 
-with open('../data.csv', 'a', newline='') as f:
+with open('data.csv', 'a', newline='') as f:
     writer = csv.writer(f)
 
     # write the data
     writer.writerow(data)
+
+
+ukraine_matches = ["Ukraine", "Russland", "Putin", "Russischer", "Russische", "Ostukraine", "Kiew", "Mariopol", "Butcha", "Selenskyj", "Kharkiv", "Donbass", "Donetsk", "Luhansk ", "Odessa", "Russe", "Selenskyjs ", "Zeitenwende",]
+numberOfArticlesU=0
+numberOfUkraineArticles=0
+
+for x in field:
+    value1 = x.text
+    if len(value1)>10:
+        numberOfArticlesU=numberOfArticlesU+1
+        if any(x in value1 for x in ukraine_matches):
+            numberOfUkraineArticles=numberOfUkraineArticles+1
+            print(value1)
+
+print("Results - Ukraine")
+print("Number of Ukraine Articles: ", numberOfUkraineArticles)
+print("Number of Articles: ", numberOfArticlesU)
+print("Percentage of Ukraine Articles: ", numberOfUkraineArticles/numberOfArticlesU)
+
+dataUkraine = ["SPIEGEL", numberOfArticlesU, numberOfUkraineArticles, numberOfUkraineArticles/numberOfArticlesU, date.today()]
+
+with open('dataUkraine.csv', 'a', newline='') as f:
+    writer = csv.writer(f)
+
+    # write the data
+    writer.writerow(dataUkraine)
+
 
 driver.quit()
 
